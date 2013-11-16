@@ -1,0 +1,12 @@
+{
+  "name": "videochat",
+  "version": "0.1.0",
+  "appPath": "public",
+  "dependencies": {
+    "angular": "~1.2.1",
+    "angular-resource": "~1.2.1",
+    "angular-route": "~1.2.1",
+    "angular-bootstrap": "~0.6.0"
+  },
+  "devDependencies": {}
+}
