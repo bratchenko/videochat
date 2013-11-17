@@ -8,4 +8,7 @@ angular.module('videochatApp', ['ngResource', 'ngRoute', 'ui.bootstrap'])
 				controller: 'IndexCtrl'
 			})
 			.otherwise({redirectTo: '/'});
+	})
+	.run(function($location, $rootElement) {
+		$rootElement.off('click');
 	});

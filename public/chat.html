@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="videochatApp">
+  <head>
+    <title>OpenTok test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/css/styles.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+
+      <div class="container">
+        <h1>Share link to this page with other person</h1>
+        <a href="/">Back</a>
+        <script src="http://static.opentok.com/v1.1/js/TB.min.js" type="text/javascript" charset="utf-8"></script>
+        <link href="http://www.tokbox.com/opentok/assets/css/demos.css" type="text/css" rel="stylesheet" >
+        <script type="text/javascript" charset="utf-8">
+          TB.addEventListener("exception", exceptionHandler);
+          var session = TB.initSession("<%=sessionId%>");
+          session.addEventListener("sessionConnected", sessionConnectedHandler);
+          session.addEventListener("streamCreated", streamCreatedHandler);
+          session.connect("44429452", "<%=token%>");
+
+          function sessionConnectedHandler(event) {
+             subscribeToStreams(event.streams);
+             session.publish();
+          }
+
+          function streamCreatedHandler(event) {
+            subscribeToStreams(event.streams);
+          }
+
+          function subscribeToStreams(streams) {
+            for (var i = 0; i < streams.length; i++) {
+              var stream = streams[i];
+              if (stream.connection.connectionId != session.connection.connectionId) {
+                session.subscribe(stream);
+              }
+            }
+          }
+
+          function exceptionHandler(event) {
+            alert("Exception: " + event.code + "::" + event.message);
+          }
+        </script>
+      </div>
+  </body>
+</html>
